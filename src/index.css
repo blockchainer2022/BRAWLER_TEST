@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Pixelar Regular W01 Regular";
+    src: url(./assets/font/PixelarRegularW01.woff) format("woff");
+  }
+}
