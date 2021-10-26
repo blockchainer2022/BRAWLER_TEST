@@ -60,3 +60,7 @@ html {
     height: 60vh;
   }
 }
+
+.presale-input:focus{
+  outline: none;
+}

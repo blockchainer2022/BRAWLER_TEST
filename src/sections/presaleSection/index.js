@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import PholderImage from "../../assets/image/placeholder.png";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
-const Index = () => {
+const Index = ({
+  account,
+  mint,
+  totalSupply,
+  displayPrice,
+  maxSupply,
+  loadWeb3,
+}) => {
+  const [value, setValue] = useState("");
+
+  const inputHandler = (e) => {
+    const reg = /^[0-9\b]+$/;
+    if (e.target.value === "" || reg.test(e.target.value)) {
+      setValue(Number(e.target.value));
+    }
+  };
+
   return (
     <section className="bg-primary" id="connect">
       <div className="bg-black">
@@ -106,9 +122,13 @@ const Index = () => {
                     <img src={PholderImage} alt="" className="w-full p-2" />
                   </ColWrap>
                   <ColWrap>
-                    <h4 className="text-center">
-                      NUMBER OF UNITS <span className="text-green">0</span>
-                    </h4>
+                    <input
+                      type="text"
+                      placeholder="NUMBER OF UNITS 0"
+                      className="bg-transparent w-full text-center text-white presale-input"
+                      value={value}
+                      onChange={inputHandler}
+                    />
                   </ColWrap>
                 </div>
                 <div className="sm:w-1/3 sm:pl-2 sm:flex sm:flex-col sm:justify-between ">
@@ -131,7 +151,12 @@ const Index = () => {
                     </div>
                   </div>
                   <ColWrap>
-                    <p className="text-green">{">MINT<"}</p>
+                    <button
+                      className="text-green block w-full"
+                      onClick={() => mint(value)}
+                    >
+                      {">MINT<"}
+                    </button>
                   </ColWrap>
                 </div>
               </div>
@@ -143,9 +168,16 @@ const Index = () => {
       <div className="container pb-10 md:pb-24 mt-8 md:mt-10">
         <div className="custom-container">
           <ColWrap>
-            <h5 className="text-4xl lg:text-5xl text-center">
-              {"> WALLET CONNECT <"}
-            </h5>
+            <button
+              className="text-4xl lg:text-5xl text-center block w-full"
+              onClick={() => loadWeb3()}
+            >
+              {account
+                ? account.slice(0, 8) +
+                  "..." +
+                  account.slice(account.length - 5)
+                : "> WALLET CONNECT <"}
+            </button>
           </ColWrap>
         </div>
       </div>
