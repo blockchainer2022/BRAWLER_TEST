@@ -130,7 +130,7 @@ function App() {
   async function mint(mintCount) {
     if (contract) {
       if (chainId === 4) {
-        const saleOpen = await contract.methods.saleOpen().call();
+        const saleOpen = await contract.methods.presaleOpen().call();
         if (saleOpen) {
           if (mintCount === 0) {
             setLessMintAmountAlert(true);
@@ -138,7 +138,7 @@ function App() {
             setConfirmTransaction(true);
             const finalPrice = Number(price) * mintCount;
             contract.methods
-              .mintNFT(mintCount)
+              .presaleMintNFT(mintCount)
               .send({ from: account, value: finalPrice })
               .on("transactionHash", function () {
                 // swal({
@@ -213,8 +213,8 @@ function App() {
       <InformationModal
         open={saleLive}
         onClose={setSaleLive}
-        title="No presale or sale open yet"
-        text="No presale or sale open yet. Please follow our discord for the updates"
+        title="No presale yet"
+        text="No presale yet. Please follow our discord for the updates"
       />
       {/* <InformationModal
         open={preSaleEligibility}
