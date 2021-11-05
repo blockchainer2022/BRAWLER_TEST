@@ -48,8 +48,11 @@ const Index = ({
           <div className="flex justify-items-end md:justify-center py-4 ">
             <ul className=" justify-center hidden md:flex">
               <ListItem />
-              <ListItem text="RoadMap" link="#roadmap" />
-              <ListItem text="Faq" link="#faq" />
+              <ListItem
+                text="RoadMap"
+                link="https://thimblegang.com/#roadmap"
+              />
+              <ListItem text="Faq" link="https://thimblegang.com/#faq" />
               <ListItem text="Connect" link="#connect" />
             </ul>
             <div
@@ -71,12 +74,24 @@ const Index = ({
                 </a>
               </li>
               <li className="p-2 text-lg uppercase">
-                <a className="block" href="#roadmap" onClick={openHandler}>
+                <a
+                  className="block"
+                  href="https://thimblegang.com/#roadmap"
+                  onClick={openHandler}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   RoadMap
                 </a>
               </li>
               <li className="p-2 text-lg uppercase">
-                <a className="block" href="#faq" onClick={openHandler}>
+                <a
+                  className="block"
+                  href="https://thimblegang.com/#faq"
+                  onClick={openHandler}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Faq
                 </a>
               </li>
@@ -176,7 +191,12 @@ const Index = ({
 export default Index;
 const ListItem = ({ text = "Mint", link = "#" }) => (
   <li className="ml-8">
-    <a href={link} className="uppercase text-5xl ">
+    <a
+      href={link}
+      className="uppercase text-5xl "
+      target="_blank"
+      rel="noreferrer"
+    >
       {text}
     </a>
   </li>
