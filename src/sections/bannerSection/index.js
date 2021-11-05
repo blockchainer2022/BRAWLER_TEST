@@ -144,7 +144,7 @@ const Index = ({
             </div>
           </div>
         </div>
-        <div className="text-green container text-center mt-5 text-3xl">
+        <div className="text-green container text-center mt-5 pb-4 text-3xl">
           {"smart contract address < >"}
         </div>
       </div>
