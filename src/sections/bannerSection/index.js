@@ -144,7 +144,7 @@ const Index = ({
               </p>
               <button
                 className={`${
-                  totalSupply === maxSupply
+                  totalSupply === 1168
                     ? "bg-gray-500 pointer-events-none select-none"
                     : "bg-yellow"
                 } rounded  p-2 text-3xl md:text-5xl mt-10 block w-full text-black  `}
@@ -176,7 +176,7 @@ const Index = ({
         <div className="container">
           <div className="custom-container">
             <p className="text-lg md:text-3xl py-2 sm:py-4 text-center">
-              Don´t forget to join our discord server and say hi!
+              Don´t forget to join our discord server and say hi!&nbsp;&nbsp;
               <a href="https://discord.gg/cjzmhD2S7y" className="text-green">
                 https://discord.gg/cjzmhD2S7y
               </a>
