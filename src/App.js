@@ -26,9 +26,7 @@ function App() {
     useState(false);
   const [mintingInProgress, setMintingInProgress] = useState(false);
   const [confirmTransaction, setConfirmTransaction] = useState(false);
-  const [preSaleEligibility, setPreSaleEligibility] = useState(false);
   const [saleLive, setSaleLive] = useState(false);
-  const [preSale, setPreSale] = useState(false);
 
   async function loadWeb3() {
     if (window.ethereum) {
@@ -48,6 +46,11 @@ function App() {
         } else console.error(error);
       }
     } else {
+      // swal(
+      //   "",
+      //   "Please install an Ethereum-compatible browser or extension like MetaMask to use this dApp!",
+      //   "error"
+      // );
       setInstallEthereum(true);
     }
   }
@@ -83,6 +86,7 @@ function App() {
       const MAX_SUPPlY = await contract.methods.MAX_SUPPLY().call();
       // console.log("MAX_SUPPLY:", MAX_SUPPlY);
       setMaxSupply(MAX_SUPPlY);
+
       //event will be fired by the smart contract when a new NFT is minted
       contract.events
         .NFTMinted()
@@ -126,56 +130,8 @@ function App() {
   async function mint(mintCount) {
     if (contract) {
       if (chainId === 4) {
-        const presaleOpen = await contract.methods.presaleOpen().call();
         const saleOpen = await contract.methods.saleOpen().call();
-        const eligibility = await contract.methods
-          .checkPresaleEligiblity(account)
-          .call();
-
-        if (presaleOpen === false && saleOpen === false) {
-          setPreSale(true);
-        } else if (presaleOpen === true && saleOpen === false) {
-          if (eligibility) {
-            if (mintCount === 0) {
-              setLessMintAmountAlert(true);
-            } else {
-              setConfirmTransaction(true);
-              const finalPrice = Number(price) * mintCount;
-              contract.methods
-                .mintNFT(mintCount)
-                .send({ from: account, value: finalPrice })
-                .on("transactionHash", function () {
-                  setConfirmTransaction(false);
-                  setMintingInProgress(true);
-                })
-                .on("confirmation", function () {
-                  const el = document.createElement("div");
-                  el.innerHTML =
-                    "View minted NFT on OpenSea : <a href='https://testnets.opensea.io/account '>View Now</a>";
-
-                  setNftMinted(true);
-                  setConfirmTransaction(false);
-                  setMintingInProgress(false);
-                  setTimeout(() => {
-                    window.location.reload(false);
-                  }, 5000);
-                })
-                .on("error", function (error, receipt) {
-                  if (error.code === 4001) {
-                    setTransactionRejected(true);
-                    setConfirmTransaction(false);
-                    setMintingInProgress(false);
-                  } else {
-                    setTransactionFailed(true);
-                    setConfirmTransaction(false);
-                    setMintingInProgress(false);
-                  }
-                });
-            }
-          } else {
-            setPreSaleEligibility(true);
-          }
-        } else {
+        if (saleOpen) {
           if (mintCount === 0) {
             setLessMintAmountAlert(true);
           } else {
@@ -185,6 +141,10 @@ function App() {
               .mintNFT(mintCount)
               .send({ from: account, value: finalPrice })
               .on("transactionHash", function () {
+                // swal({
+                //   title: "Minting NFT!",
+                //   icon: "info",
+                // });
                 setConfirmTransaction(false);
                 setMintingInProgress(true);
               })
@@ -193,6 +153,11 @@ function App() {
                 el.innerHTML =
                   "View minted NFT on OpenSea : <a href='https://testnets.opensea.io/account '>View Now</a>";
 
+                // swal({
+                //   title: "NFT Minted!",
+                //   content: el,
+                //   icon: "success",
+                // });
                 setNftMinted(true);
                 setConfirmTransaction(false);
                 setMintingInProgress(false);
@@ -202,25 +167,33 @@ function App() {
               })
               .on("error", function (error, receipt) {
                 if (error.code === 4001) {
+                  // swal("Transaction Rejected!", "", "error");
                   setTransactionRejected(true);
                   setConfirmTransaction(false);
                   setMintingInProgress(false);
                 } else {
+                  // swal("Transaction Failed!", "", "error");
                   setTransactionFailed(true);
                   setConfirmTransaction(false);
                   setMintingInProgress(false);
                 }
               });
           }
+        } else {
+          setSaleLive(true);
         }
       } else {
         setswitchToMainnet(true);
       }
     } else {
+      // swal(
+      //   "",
+      //   "Please install an Ethereum-compatible browser or extension like MetaMask to use this dApp!",
+      //   "error"
+      // );
       setEthereumCompatibleBrowser(true);
     }
   }
-
   return (
     <div>
       <Home
@@ -231,24 +204,24 @@ function App() {
         loadWeb3={loadWeb3}
         maxSupply={maxSupply}
       />
-      <InformationModal
+      {/* <InformationModal
         open={preSale}
         onClose={setPreSale}
         title="No presale or sale open yet"
         text="No presale or sale open yet. Follow us on Discord and Twitter fo the updates"
-      />
+      /> */}
       <InformationModal
         open={saleLive}
         onClose={setSaleLive}
         title="No presale or sale open yet"
         text="No presale or sale open yet. Please follow our discord for the updates"
       />
-      <InformationModal
+      {/* <InformationModal
         open={preSaleEligibility}
         onClose={setPreSaleEligibility}
         title="Not Presale Eligible"
         text="You are not whitelisted for presale"
-      />
+      /> */}
       <InformationModal
         open={lessMintAmountAlert}
         onClose={setLessMintAmountAlert}

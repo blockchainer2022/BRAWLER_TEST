@@ -1,13 +1,7 @@
 import React from "react";
 import { Layout } from "../../components";
 import { toast } from "react-toastify";
-import {
-  BannerSection,
-  PresaleSection,
-  RoadMapSection,
-  FaqSection,
-  TeamSection,
-} from "../../sections";
+import { BannerSection } from "../../sections";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 const Index = ({
@@ -21,8 +15,7 @@ const Index = ({
   return (
     <div>
       <Layout>
-        <BannerSection />
-        <PresaleSection
+        <BannerSection
           account={account}
           mint={mint}
           totalSupply={totalSupply}
@@ -30,9 +23,6 @@ const Index = ({
           maxSupply={maxSupply}
           loadWeb3={loadWeb3}
         />
-        <RoadMapSection />
-        <FaqSection />
-        <TeamSection />
       </Layout>
     </div>
   );

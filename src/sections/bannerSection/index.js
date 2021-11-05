@@ -1,14 +1,45 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-// import BannerRing from "../../assets/image/banner_ring2.png";
-// import Banner from "../../assets/image/banner-bg.png";
+
 import { FaTimes } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-const Index = () => {
+import Slider, { SliderTooltip } from "rc-slider";
+import "rc-slider/assets/index.css";
+import Image from "../../assets/image/tgblauch.png";
+const Index = ({
+  account,
+  mint,
+  totalSupply,
+  displayPrice,
+  maxSupply,
+  loadWeb3,
+}) => {
+  const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const openHandler = () => {
     setOpen((prev) => !prev);
   };
+  const { Handle } = Slider;
+
+  const handle = (props) => {
+    const { value, dragging, index, ...restProps } = props;
+    if (value > 0) {
+      setValue(value);
+    }
+
+    return (
+      <SliderTooltip
+        prefixCls="rc-slider-tooltip"
+        overlay={`${value}`}
+        visible={dragging}
+        placement="top"
+        key={index}
+      >
+        <Handle value={value} {...restProps} />
+      </SliderTooltip>
+    );
+  };
+
   return (
     <section className="banner text-white  ">
       <div className="banner-image">
@@ -56,30 +87,69 @@ const Index = () => {
               </li>
             </ul>
           </div>
+          {/* Mobile Menu */}
         </div>
-        {/* <div className="custom-container">
-          <div className="pb-14">
-            <img src={BannerRing} alt="" className="w-full mx-auto" />
-            <div className="bg-black p-2 md:p-4 rounded text-lg md:text-3xl text-center">
-              <p>
-                <span className="text-green"> Thimble Gang Brawlers</span> is a
-                collection of 5000 algorithmically generated pixel characters
-                with 2 genders, 1500 unique facial expressions and skin colour
-                coding. An incredible ammount of love is being invested into
-                this project and it will be deployed in{" "}
-                <span className="text-green"> 10 stages </span>which we plan to
-                fulfil with your help. For detailed info view{" "}
-                <span className="text-green"> ROADMAP. </span>
+        <div className="container text-center py-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+            <div className="md:col-span-3 bg-black rounded p-8">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl ">
+                <span className="text-yellow">MINT</span>PANEL
+                <span className="text-green"> LIVE</span>
+              </h1>
+              <button
+                className="border-2 border-yellow-400 block w-full text-yellow rounded p-2 text-3xl md:text-5xl lg:text-6xl mt-4"
+                onClick={() => loadWeb3()}
+              >
+                {account
+                  ? account.slice(0, 8) +
+                    "..." +
+                    account.slice(account.length - 5)
+                  : "> WALLET CONNECT <"}
+              </button>
+              <p className="text-xl md:text-2xl  py-3">
+                <span className="text-green">Compatible with</span> Metamask{" "}
+                <span className="text-green">and </span>
+                Trust wallet <span className="text-green">browser</span>
               </p>
+              <div className="my-4">
+                <Slider min={0} max={20} defaultValue={1} handle={handle} />
+              </div>
+
+              <p className="text-2xl md:text-4xl md:px-10 ">
+                Mint <span className="text-green"> 01 </span> TG Brawlers for{" "}
+                <span className="text-green"> 0.00 </span> ETH <br />
+                <span className="text-green">
+                  (A limit of 100 units per transaction is set)
+                </span>
+              </p>
+              <button
+                className="bg-yellow rounded  p-2 text-3xl md:text-5xl mt-10 block w-full text-black "
+                onClick={() => mint(value)}
+              >
+                {"< MINT >"}
+              </button>
+            </div>
+            <div className="md:col-span-2 bg-black rounded  overflow-hidden mb-5 md:mb-0">
+              <div className="hidden md:block">
+                <img src={Image} alt="" className="w-full" />
+              </div>
+              <div className="p-10">
+                <p className="text-4xl  md:text-5xl lg:text-6xl mt-2">
+                  Brawlers minted
+                </p>
+                <p className="text-4xl  md:text-5xl lg:text-7xl text-green">
+                  {totalSupply}/{maxSupply}
+                </p>
+              </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <div className="bg-primary">
         <div className="container">
           <div className="custom-container">
             <p className="text-lg md:text-3xl py-2 sm:py-4 text-center">
-              Don´t forget to join our discord server and say hi!{" "}
+              Don´t forget to join our discord server and say hi!
               <a href="https://discord.gg/cjzmhD2S7y" className="text-green">
                 https://discord.gg/cjzmhD2S7y
               </a>

@@ -48,7 +48,7 @@ html {
 }
 
 .banner-image {
-  height: 100vh;
+  min-height: 100vh;
   background-image: url(./assets/image/banner-bg2.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -61,6 +61,35 @@ html {
   }
 }
 
-.presale-input:focus{
+.presale-input:focus {
   outline: none;
+}
+
+.rc-slider .rc-slider-rail {
+  background-color: white;
+  height: 10px;
+}
+.rc-slider .rc-slider-track {
+  background-color: #ffbd14;
+  height: 10px;
+}
+.rc-slider .rc-slider-handle {
+  background-color: #ffbd14;
+  border-color: #ffbd14;
+  box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.3);
+  height: 20px;
+  width: 20px;
+}
+
+body .rc-slider-tooltip-inner {
+  background-color: #ffbd14;
+  height: 25px;
+  width: 25px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body .rc-slider-tooltip-content .rc-slider-tooltip-arrow {
+  border-top-color: #ffbd14;
 }
